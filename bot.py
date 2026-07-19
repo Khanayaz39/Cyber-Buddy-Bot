@@ -294,6 +294,17 @@ QUIZ_QUESTIONS = [
         "correct": 1,
         "explanation": "A Distributed Denial of Service (DDoS) attack floods a target (website/server) with so much traffic from many sources that it becomes slow or completely unavailable to legitimate users.",
     },
+    {
+        "question": "🕵️‍♂️ What is a Man-in-the-Middle (MITM) attack?",
+        "options": [
+            "A firewall configuration error",
+            "An attacker secretly intercepts and possibly alters communication between two parties",
+            "A type of brute-force password attack",
+            "A method to physically access a server room",
+        ],
+        "correct": 1,
+        "explanation": "In a MITM attack, the attacker secretly positions themselves between two communicating parties (e.g., you and a website), intercepting or even modifying the data in transit. Using HTTPS and avoiding public Wi-Fi without a VPN are key defenses against MITM attacks.",
+    },
 ]
 
 # ---------------------------------------------------------------
