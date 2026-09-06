@@ -23,6 +23,8 @@ import random
 import logging
 import html
 import asyncio
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from datetime import datetime
 
 import aiohttp
@@ -67,7 +69,7 @@ if not GEMINI_API_KEY:
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-# Gemini 3.8 Flash — fast, free-tier eligible, great for educational Q&A.
+# Gemini 3.8 Flash — latest, fast, free-tier eligible, great for educational Q&A.
 GEMINI_MODEL = "gemini-3.8-flash"
 
 SYSTEM_PROMPT = """You are CyberSec Buddy, an educational assistant living
@@ -1014,10 +1016,49 @@ async def callback_router(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ---------------------------------------------------------------
-# 15. MAIN ENTRY POINT
+# 15. HEALTH CHECK SERVER (For Render Web Service deployment)
+# ---------------------------------------------------------------
+
+class HealthCheckHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(b"CyberSec Buddy is healthy and running!")
+
+    def log_message(self, format, *args):
+        pass  # Suppress HTTP access logging
+
+
+def start_health_server():
+    """Start background HTTP server if PORT is set by cloud hosting (e.g. Render)."""
+    port_str = os.environ.get("PORT")
+    if port_str:
+        try:
+            port = int(port_str)
+            server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            logger.info(f"🌐 Health check server listening on port {port}")
+        except Exception as e:
+            logger.error(f"Failed to start health check server: {e}")
+
+
+# ---------------------------------------------------------------
+# 16. MAIN ENTRY POINT
 # ---------------------------------------------------------------
 
 def main():
+    # Start web server if running on cloud host (Render Web Service)
+    start_health_server()
+
+    # Ensure an asyncio event loop exists (required for Python 3.14+)
+    try:
+        asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
     app = Application.builder().token(TELEGRAM_BOT_TOKEN).build()
 
     # Command handlers
