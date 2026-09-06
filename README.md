@@ -46,7 +46,7 @@ vulnerability lookups, news feeds, and more.
 3. Click **Get API key** in the sidebar, then **Create API key**.
 4. Let it create a new Google Cloud project if prompted.
 5. Copy the key — this is your `GEMINI_API_KEY`.
-6. This bot uses the `gemini-2.5-flash` model, which is on Google's free
+6. This bot uses the `gemini-3.8-flash` model, which is on Google's free
    tier: no cost as long as you stay within the rate limits (requests per
    minute / per day). If you hit a rate limit, the bot will just show a
    friendly "try again in a moment" message — see STEP 5 below for what
@@ -155,7 +155,7 @@ for current values). If your bot starts showing the "try again in a
 moment" error a lot:
 - Wait a minute or two between heavy testing bursts.
 - Consider switching `GEMINI_MODEL` in `bot.py` to a lighter model like
-  `gemini-2.5-flash-lite` (usually has a higher free-tier request cap,
+  `gemini-3.8-flash` (usually has a higher free-tier request cap,
   at a small quality tradeoff).
 - If you outgrow the free tier entirely, you can add a payment method
   in AI Studio to move to paid usage — Gemini's paid rates are also
