@@ -68,7 +68,7 @@ if not GEMINI_API_KEY:
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Gemini 3.5 Flash — fast, free-tier eligible, great for educational Q&A.
-GEMINI_MODEL = "gemini-3.5-flash"
+GEMINI_MODEL = "gemini-3.8-flash"
 
 SYSTEM_PROMPT = """You are CyberSec Buddy, an educational assistant living
 inside a Telegram bot. Your ONLY job is to teach people about cybersecurity
