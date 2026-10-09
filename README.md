@@ -1,4 +1,4 @@
-# CyberSec Buddy — Telegram Cybersecurity Education Bot
+# Cyber Buddy — Telegram Cybersecurity Education Bot
 
 A feature-rich Telegram bot that teaches cybersecurity concepts using the
 Google Gemini API (free tier). Includes AI-powered Q&A, interactive quizzes,
